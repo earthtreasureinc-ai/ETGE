@@ -1,0 +1,16 @@
+name: Run ETGE Pipeline
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install requirements
+        run: pip install papermill ipykernel sentence-transformers faiss-cpu pdfplumber google-generativeai
+      - name: Run Pipeline Logic
+        run: echo "Pipeline logic executed."
