@@ -1,0 +1,40 @@
+{
+  "title": "ETGE Marketing Concept",
+  "HUMAN_REVIEW_REQUIRED": true,
+  "redacted": true,
+  "created_by": "automated_pipeline",
+  "notes": "Requires human verification of medium/low confidence claims; product/engineering to attach evidence links.",
+  "signoffs": {
+    "product": {
+      "name": "Mr. Saeed Guled",
+      "role": "Product Manager",
+      "timestamp": "2026-04-12T19:03:34Z",
+      "verdict": "needs_revision",
+      "evidence_links": [
+        "https://docs.google.com/document/d/ETGE_PRODUCT_SPEC",
+        "https://docs.google.com/spreadsheets/d/BENCHMARK_DATA"
+      ],
+      "notes": "Validated scope of automated concept generation; performance benchmarks pending for larger projects."
+    },
+    "engineering": {
+      "name": "Earth Treasure",
+      "role": "Engineering Lead",
+      "timestamp": "2026-04-12T19:05:00Z",
+      "verdict": "needs_revision",
+      "evidence_links": [
+        "https://github.com/earthtreasureinc-ai/ETGE/actions/runs/VERIFIER_TESTS",
+        "/content/drive/MyDrive/ETGE_archive/marketing/20260412_1903Z/review_report_20260413_1912Z.json"
+      ],
+      "notes": "Confirmed PII redaction pipeline exists; recommend documenting verifier false positive/negative rates before public claim."
+    },
+    "combined_verdict": {
+      "verdict": "needs_revision",
+      "summary": "Product and Engineering require additional benchmarks and verifier accuracy metrics before approving public claims.",
+      "next_steps": [
+        "Engineering to produce verifier accuracy report (precision/recall) within 7 days",
+        "Product to update marketing copy with conservative phrasing and add footnote links to evidence",
+        "Legal to review security wording and approve final phrasing"
+      ]
+    }
+  }
+}
