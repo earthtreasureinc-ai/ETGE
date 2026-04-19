@@ -24,3 +24,10 @@ jobs:
 
       - name: Run ETGE Controller
         run: python etge_controller.py --archive-root "/tmp/etge_archive"
+
+      - name: Upload ETGE Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: etge-research-bundle
+          path: /tmp/etge_archive/
+          retention-days: 5
