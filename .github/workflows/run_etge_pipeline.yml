@@ -1,6 +1,9 @@
 name: Run ETGE Pipeline
 on:
   workflow_dispatch:
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   run:
     runs-on: ubuntu-latest
