@@ -1,21 +1,40 @@
-import os, sys, json, argparse
+import os
+import json
+import argparse
+from pathlib import Path
 from datetime import datetime, timezone
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--archive-root", default="/tmp/etge_archive")
+    parser = argparse.ArgumentParser(description="ETGE Research Orchestrator")
+    parser.add_argument("--archive-root", required=True, help="Path to the artifact storage")
     args = parser.parse_args()
 
-    os.makedirs(args.archive_root, exist_ok=True)
-    print(f"[ETGE] Controller initialized at {datetime.now(timezone.utc).isoformat()}")
-    print(f"[ETGE] Archive root set to: {args.archive_root}")
+    # 1. Initialize environment
+    archive_path = Path(args.archive_root)
+    archive_path.mkdir(parents=True, exist_ok=True)
+    print(f"[ETGE Controller] Initialized at {datetime.now(timezone.utc).isoformat()}")
+    print(f"[ETGE Controller] Archive root: {archive_path.absolute()}")
+
+    # 2. Orchestration Logic: Scan for division artifacts
+    print("\n--- SCANNING FOR DIVISION STATUSES ---")
+    found_artifacts = list(archive_path.rglob("*.json"))
     
-    # Generate minimal metadata artifact for the runner
-    meta_path = os.path.join(args.archive_root, 'triage_metadata.json')
-    with open(meta_path, 'w') as f:
-        json.dump({"status": "initialized", "runner": "github_actions"}, f)
-    
-    print(f"[ETGE] Process complete. Artifacts stored in {args.archive_root}")
+    if not found_artifacts:
+        print("No artifacts found yet. Waiting for pipeline execution.")
+    else:
+        for art_path in found_artifacts:
+            try:
+                with open(art_path, 'r') as f:
+                    data = json.load(f)
+                division = data.get('division', 'Unknown')
+                status = data.get('status', 'PENDING')
+                review_req = data.get('HUMAN_REVIEW_REQUIRED', True)
+                print(f"Division: {division:<20} | Status: {status} | Review Needed: {review_req}")
+            except Exception as e:
+                print(f"Error reading {art_path.name}: {e}")
+
+    # 3. Finalization
+    print("\n[ETGE Controller] Orchestration cycle complete.")
 
 if __name__ == '__main__':
     main()
