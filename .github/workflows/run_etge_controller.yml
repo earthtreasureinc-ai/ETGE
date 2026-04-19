@@ -6,7 +6,7 @@ jobs:
   run-controller:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Opt-in to Node 24 to clear warnings
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,5 +17,4 @@ jobs:
           python-version: '3.10'
 
       - name: Run ETGE Controller
-        # Using absolute path via GITHUB_WORKSPACE to prevent 'No such file' error
         run: python ${GITHUB_WORKSPACE}/etge_controller.py --archive-root "/tmp/etge_archive"
